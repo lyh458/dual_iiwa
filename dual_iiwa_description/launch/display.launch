@@ -1,0 +1,30 @@
+<launch>
+
+  <arg name="use_pedestal" default="true" doc="If true, load the urdf with pedestal" />
+
+  <!-- | Parameters for iiwa | -->
+  <arg name="robot1_ns" default="iiwa_1" doc="The unique robot 1 namespace."/>
+  <arg name="robot2_ns" default="iiwa_2" doc="The unique robot 2 namespace."/>
+  <arg name="robot1_name" default="iiwa_1" doc="The name of robot 1"/>
+  <arg name="robot2_name" default="iiwa_2" doc="The name of robot 2"/>
+  <arg name="iiwa_model" default="iiwa7"/>
+
+  <arg name="use_rviz" default="true" doc="Choose whether or not to use rviz."/>
+  <arg name="use_gui" default="true" doc="Choose whether or not to use gui."/>
+
+  <include file="$(find dual_iiwa_description)/launch/dual_iiwa_upload.launch">
+    <arg name="robot1_ns" value="$(arg robot1_ns)" />
+    <arg name="robot2_ns" value="$(arg robot2_ns)" />
+    <arg name="robot1_name" value="$(arg robot1_name)" />
+    <arg name="robot2_name" value="$(arg robot2_name)" />
+    <arg name="iiwa_model" value="$(arg iiwa_model)" />
+    <!-- ``iiwa_name`` is fixed same as used in moveit assitant` to fixed [#269](https://github.com/IFL-CAMP/iiwa_stack/issues/269) -->
+    <arg name="use_pedestal" value="$(arg use_pedestal)"/>
+  </include>
+
+  <!-- bring up robot description, joint and robot state publishers (also can start rviz) -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" unless="$(arg use_gui)" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" if="$(arg use_gui)" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find dual_iiwa_description)/launch/dual_iiwa.rviz" required="true" />
+</launch>

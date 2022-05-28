@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="dual_iiwa"
+  xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <!--grey-->
+  <material name="grey">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
+  <!--black-->
+  <material name="black">
+    <color rgba="0.0 0.0 0.0  1.0"/>
+  </material>
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find iiwa_description)/urdf/materials.xacro" />
+  <!--Import the lbr iiwa macro -->
+  <xacro:include filename="$(find dual_iiwa_description)/urdf/iiwa7.xacro"/>
+
+  <!-- param -->
+  <xacro:arg name="robot1_name" default="iiwa_1"/>
+  <xacro:arg name="robot2_name" default="iiwa_2"/>
+  <xacro:arg name="robot1_namespace" default="iiwa_1"/>
+  <xacro:arg name="robot2_namespace" default="iiwa_2"/>
+  <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
+
+  <link name="world" />
+
+  <!-- Specify Proper Prefix names for understanding of different arms. -->
+  <xacro:iiwa7 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot1_name)" robot_namespace="$(arg robot1_namespace)" parent="world">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </xacro:iiwa7>
+  <xacro:iiwa7 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot2_name)" robot_namespace="$(arg robot2_namespace)" parent="world">
+    <origin xyz="1.5 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </xacro:iiwa7>
+
+</robot>
