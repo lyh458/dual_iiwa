@@ -7,6 +7,8 @@
   <arg name="use_pedestal" default="true" doc="If true, load the urdf with pedestal" />
 
   <!-- | Parameters for iiwa | -->
+  <arg name="iiwa_1_model" default="iiwa7" /> 
+  <arg name="iiwa_2_model" default="iiwa7" />
   <arg name="robot1_name" default="iiwa_1" />
   <arg name="robot2_name" default="iiwa_2" />
   <arg name="robot1_ns" default="iiwa_1" />
@@ -15,11 +17,11 @@
   <arg name="hardware_interface" default="PositionJointInterface"/>
 
   <group if="$(arg use_pedestal)">
-    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find dual_iiwa_description)/urdf/dual_iiwa_pedestal.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot1_name:=$(arg robot1_name) robot2_name:=$(arg robot2_name) robot1_namespace:=$(arg robot1_ns) robot2_namespace:=$(arg robot2_ns)" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find dual_iiwa_description)/urdf/dual_iiwa_pedestal.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot1_name:=$(arg robot1_name) robot2_name:=$(arg robot2_name) robot1_namespace:=$(arg robot1_ns) robot2_namespace:=$(arg robot2_ns) iiwa_1_model:=$(arg iiwa_1_model) iiwa_2_model:=$(arg iiwa_2_model)" />
   </group>
 
   <group unless="$(arg use_pedestal)">
-    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find dual_iiwa_description)/urdf/dual_iiwa.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot1_name:=$(arg robot1_name) robot2_name:=$(arg robot2_name) robot1_namespace:=$(arg robot1_ns) robot2_namespace:=$(arg robot2_ns)" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find dual_iiwa_description)/urdf/dual_iiwa.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot1_name:=$(arg robot1_name) robot2_name:=$(arg robot2_name) robot1_namespace:=$(arg robot1_ns) robot2_namespace:=$(arg robot2_ns) iiwa_1_model:=$(arg iiwa_1_model) iiwa_2_model:=$(arg iiwa_2_model)" />
   </group>
 
 </launch>

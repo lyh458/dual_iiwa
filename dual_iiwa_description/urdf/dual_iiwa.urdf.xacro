@@ -15,22 +15,45 @@
   <xacro:include filename="$(find iiwa_description)/urdf/materials.xacro" />
   <!--Import the lbr iiwa macro -->
   <xacro:include filename="$(find dual_iiwa_description)/urdf/iiwa7.xacro"/>
+  <xacro:include filename="$(find dual_iiwa_description)/urdf/iiwa14.xacro"/>
 
   <!-- param -->
+  <xacro:arg name="iiwa_1_model" default="iiwa7"/>
+  <xacro:arg name="iiwa_2_model" default="iiwa7"/>
   <xacro:arg name="robot1_name" default="iiwa_1"/>
   <xacro:arg name="robot2_name" default="iiwa_2"/>
   <xacro:arg name="robot1_namespace" default="iiwa_1"/>
   <xacro:arg name="robot2_namespace" default="iiwa_2"/>
   <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
 
+  <xacro:property name="iiwa_1_model" value="$(arg iiwa_1_model)"/>
+  <xacro:property name="iiwa_2_model" value="$(arg iiwa_2_model)"/>
+
   <link name="world" />
 
   <!-- Specify Proper Prefix names for understanding of different arms. -->
-  <xacro:iiwa7 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot1_name)" robot_namespace="$(arg robot1_namespace)" parent="world">
-    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-  </xacro:iiwa7>
-  <xacro:iiwa7 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot2_name)" robot_namespace="$(arg robot2_namespace)" parent="world">
-    <origin xyz="1.5 0.0 0.0" rpy="0.0 0.0 0.0" />
-  </xacro:iiwa7>
+  <xacro:if value="${iiwa_1_model == 'iiwa7'}">
+    <xacro:iiwa7 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot1_name)" robot_namespace="$(arg robot1_namespace)" parent="world">
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:iiwa7>
+  </xacro:if>
+
+  <xacro:if value="${iiwa_2_model == 'iiwa7'}">
+    <xacro:iiwa7 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot2_name)" robot_namespace="$(arg robot2_namespace)" parent="world">
+      <origin xyz="1.5 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:iiwa7>
+  </xacro:if>
+
+  <xacro:if value="${iiwa_1_model == 'iiwa14'}">
+    <xacro:iiwa14 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot1_name)" robot_namespace="$(arg robot1_namespace)" parent="world">
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:iiwa14>
+  </xacro:if>
+
+  <xacro:if value="${iiwa_2_model == 'iiwa14'}">
+    <xacro:iiwa14 hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot2_name)" robot_namespace="$(arg robot2_namespace)" parent="world">
+      <origin xyz="1.5 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:iiwa14>
+  </xacro:if>
 
 </robot>
