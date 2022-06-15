@@ -1,0 +1,16 @@
+<package>
+
+  <name>dual_iiwa_bringup</name>
+  <version>0.1.0</version>
+  <description>
+     The bringup(driver) package for iiwa and ur manipulator.
+  </description>
+  <author email="liyihui.ing@gmail.com">Yihui Li</author>
+  <maintainer email="liyihui.ing@gmail.com">Yihui Li</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>ur_modern_driver</run_depend>
+
+</package>

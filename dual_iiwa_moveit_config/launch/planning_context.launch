@@ -1,0 +1,47 @@
+<launch>
+  <!-- By default we do not overwrite the URDF. Change the following to true to change the default behavior -->
+  <arg name="load_robot_description" default="false"/>
+
+  <!-- The name of the parameter under which the URDF is loaded -->
+  <arg name="robot_description" default="robot_description"/>
+
+  <arg name="use_pedestal" default="true" doc="If true, load the urdf with pedestal" />
+
+  <!-- | Parameters for iiwa | -->
+  <arg name="robot1_ns" default="iiwa_1" doc="The unique robot 1 namespace."/>
+  <arg name="robot2_ns" default="iiwa_2" doc="The unique robot 2 namespace."/>
+  <arg name="robot1_name" default="iiwa_1" doc="The name of robot 1"/>
+  <arg name="robot2_name" default="iiwa_2" doc="The name of robot 2"/>
+  <arg name="iiwa_model" default="iiwa7"/>
+  <arg name="hardware_interface" default="PositionJointInterface"/>
+
+  <!-- Load universal robot description format (URDF) -->
+  <group if="$(arg load_robot_description)">
+    <include file="$(find dual_iiwa_description)/launch/dual_iiwa_upload.launch">
+      <arg name="robot1_ns" value="$(arg robot1_ns)" />
+      <arg name="robot2_ns" value="$(arg robot2_ns)" />
+      <arg name="robot1_name" value="$(arg robot1_name)" />
+      <arg name="robot2_name" value="$(arg robot2_name)" />
+      <arg name="iiwa_model" value="$(arg iiwa_model)" />
+      <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+      <!-- ``iiwa_name`` is fixed same as used in moveit assitant` to fixed [#269](https://github.com/IFL-CAMP/iiwa_stack/issues/269) -->
+      <arg name="use_pedestal" value="$(arg use_pedestal)"/>
+    </include>
+  </group>
+
+  <!-- The semantic description that corresponds to the URDF -->
+  <param unless="$(arg use_pedestal)" name="$(arg robot_description)_semantic" textfile="$(find dual_iiwa_moveit_config)/config/dual_iiwa.srdf" />
+  <param if="$(arg use_pedestal)" name="$(arg robot_description)_semantic" textfile="$(find dual_iiwa_moveit_config)/config/dual_iiwa_pedestal.srdf" />
+
+  <!-- Load updated joint limits (override information from URDF) -->
+  <group ns="$(arg robot_description)_planning">
+    <rosparam command="load" file="$(find dual_iiwa_moveit_config)/config/joint_limits.yaml"/>
+  </group>
+
+  <!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
+  <group ns="$(arg robot_description)_kinematics">
+    <rosparam command="load" file="$(find dual_iiwa_moveit_config)/config/kinematics.yaml"/>
+
+  </group>
+
+</launch>
