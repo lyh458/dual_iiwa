@@ -39,22 +39,24 @@
   <arg name="use_pedestal" default="true" doc="If true, load the urdf with pedestal" />
 
   <!-- | Parameters for iiwa | -->
+  <arg name="iiwa_1_model" default="iiwa7" />
+  <arg name="iiwa_2_model" default="iiwa7" />
   <arg name="robot1_ns" default="iiwa_1" doc="The unique robot 1 namespace."/>
   <arg name="robot2_ns" default="iiwa_2" doc="The unique robot 2 namespace."/>
   <arg name="robot1_name" default="iiwa_1" doc="The name of robot 1"/>
   <arg name="robot2_name" default="iiwa_2" doc="The name of robot 2"/>
-  <arg name="iiwa_model" default="iiwa7"/>
   <arg name="hardware_interface" default="PositionJointInterface"/>
 
   <arg name="load_robot_description" default="true" />
   <!-- load URDF, SRDF and joint_limits configuration -->
   <include file="$(find dual_iiwa_moveit_config)/launch/planning_context.launch">
     <arg name="load_robot_description" value="$(arg load_robot_description)" />
+    <arg name="iiwa_1_model" value="$(arg iiwa_1_model)" />
+    <arg name="iiwa_2_model" value="$(arg iiwa_2_model)" />
     <arg name="robot1_ns" value="$(arg robot1_ns)" />
     <arg name="robot2_ns" value="$(arg robot2_ns)" />
     <arg name="robot1_name" value="$(arg robot1_name)" />
     <arg name="robot2_name" value="$(arg robot2_name)" />
-    <arg name="iiwa_model" value="$(arg iiwa_model)" />
     <arg name="hardware_interface" value="$(arg hardware_interface)"/>
     <!-- ``iiwa_name`` is fixed same as used in moveit assitant` to fixed [#269](https://github.com/IFL-CAMP/iiwa_stack/issues/269) -->
     <arg name="use_pedestal" value="$(arg use_pedestal)"/>

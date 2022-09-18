@@ -13,7 +13,6 @@
   <arg name="robot2_name" default="iiwa_2" />
   <arg name="robot1_ns" default="iiwa_1" />
   <arg name="robot2_ns" default="iiwa_2" />
-  <arg name="iiwa_model" default="iiwa7" />
   <arg name="hardware_interface" default="PositionJointInterface"/>
 
   <group if="$(arg use_pedestal)">
